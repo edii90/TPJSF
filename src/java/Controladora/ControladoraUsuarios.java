@@ -2,11 +2,12 @@ package Controladora;
 
 import Datos.DAOusuarios;
 import Modelo.Usuarios;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
 
-public class ControladoraUsuarios {
+public class ControladoraUsuarios implements Serializable {
     
     DAOusuarios Dusuarios ;
     Usuarios Eusuarios;
@@ -65,7 +66,7 @@ public class ControladoraUsuarios {
         }
     }
     
-    public Hashtable ObtenerUsuario() throws Exception{
+    public Hashtable ObtenerUsuarios() throws Exception{
         try{
             return Dusuarios.TraerTodosLosUsuarios();
         }catch (SQLException ex){

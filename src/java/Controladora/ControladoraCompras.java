@@ -3,10 +3,11 @@ package Controladora;
 import Datos.DAOcompras;
 import Modelo.Compras;
 import Modelo.Usuarios;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
-public class ControladoraCompras {
+public class ControladoraCompras implements Serializable{
     
     DAOcompras Dcompras;
     Compras    Ecompras;

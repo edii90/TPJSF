@@ -1,0 +1,174 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Productos - Ferreteria</title>
+        <link href="/TPJSF/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/style.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="main.xhtml">Ferreteria</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="main.xhtml"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li><a href="history.xhtml">Historial</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                        
+                        <li class="hidden-xs">
+                            <a id="cart" href="checkout.xhtml"><i class="glyphicon glyphicon-shopping-cart"></i>(#{comprasBean.cantItems()})</a>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{userlogBean.user.usuario} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li><a href="administration.xhtml"><span class="glyphicon glyphicon-cog"></span> Administrar Usuarios</a></li>
+                                <li  class="active"><a href="productos.xhtml"> Productos</a></li> 
+                                <li><a href="compras.xhtml"> Compras</a></li>
+                                <li><a href="piqueo.xhtml"> Piqueos</a></li>
+
+                                <li><a href="Logout"><span class="glyphicon glyphicon-off"></span> Cerrar Sesion</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </div><!-- /.nav-collapse -->
+            </div><!-- /.container -->
+        </nav>
+
+        <div class="container">
+            <c:if test="#{productosBean.hayMsj()}">
+                <div class="alert alert-info" role="alert" >
+                    <strong>#{productosBean.mostrarMsj()}</strong>
+                </div>
+            </c:if>
+            <div class="row">
+
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Lista de Productos</div>
+                    <div class="panel-body">
+                        <p>Lista de todos los Productos registrados</p>
+
+                        <c:forEach items="#{productosBean.todosProd()}" var="prod">
+                            <div class="row item">
+                                <div class="col-sm-2 cell img"><h:graphicImage class="img-responsive" alt="200x200" value="#{prod.img}"></h:graphicImage></div>
+                                <div class="col-xs-9 col-sm-8 cell text" style="display: inline-block">
+                                    <h4>#{prod.nombre}</h4>
+                                    <div class="descripcion">Stock: #{prod.stock} </div>
+                                    <span> $ #{prod.precio}</span>
+                                </div>
+
+                                <div class="col-xs-3 col-sm-2 cell button">
+                                    <h:form>
+                                        <h:commandButton id="modificar" value="Modificar" class="btn btn-modificar">
+                                            <f:setPropertyActionListener for="modificar" target="#{productosBean.prod.id}" value="#{prod.id}"/>
+                                            <f:setPropertyActionListener for="modificar" target="#{productosBean.prod.nombre}" value="#{prod.nombre}"/>
+                                            <f:setPropertyActionListener for="modificar" target="#{productosBean.prod.stock}" value="#{prod.stock}"/>
+                                            <f:setPropertyActionListener for="modificar" target="#{productosBean.prod.precio}" value="#{prod.precio}"/>
+                                            <f:setPropertyActionListener for="modificar" target="#{productosBean.prod.img}" value="#{prod.img}"/>
+                                        </h:commandButton>
+                                        <h:commandButton id="eliminar" type="submit" value="Eliminar" class="btn btn-eliminar" action="#{productosBean.eliminarProd(prod.id)}">
+                                        </h:commandButton>
+                                    </h:form>
+                                </div>
+                            </div><!-- /.item -->
+                        </c:forEach>
+                    </div>
+                </div>
+            </div><!-- /row -->
+             <div class="row">
+                <div class="col-md-6 pull-left">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Registro de Usuarios</div>
+                        <div class="panel-body">
+                            <h:form class="form-horizontal">
+                                <div class="form-group">
+                                    <label  for="reg-nombre">Nombre</label>
+                                    <h:inputText value="#{productosBean.nombre}" class="form-control" pt:name="reg-nombre" id="reg-nombre" pt:placeholder="Nombre"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="reg-precio">Precio</label>
+                                    <h:inputText value="#{productosBean.precio}" class="form-control" pt:name="reg-precio" id="reg-precio" pt:placeholder="Precio"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="reg-stock">Stock</label>
+                                    <h:inputText value="#{productosBean.stock}"  class="form-control" pt:name="reg-Stock" id="reg-Stock" pt:placeholder="Stock"  required="">
+                                        <f:convertNumber type="number"/> 
+                                    </h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reg-img">Imagen</label>
+                                    <h:inputText value="#{productosBean.img}"  class="form-control" pt:name="reg-img" id="reg-img" pt:placeholder="Imagen"  required="" ></h:inputText>
+                                </div>  
+                                <hr></hr>
+                                <h:commandButton type="submit" action="#{productosBean.registrarProd()}" id="reg" class="btn btn-primary pull-left" value="Registrar"></h:commandButton> 
+                                <button type="reset" class="btn btn-warning pull-right">Resetear</button>                                
+                            </h:form>
+                        </div><!-- panel-body -->
+                    </div><!-- panel -->
+                </div><!-- /col-md-6 pull-left -->
+                <div class="col-md-6 pull-right">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Modificar Usuario</div>
+                        <div class="panel-body">
+                            <h:form class="form-horizontal">
+                                 <div class="form-group">
+                                    <label  for="mod-nombre">Nombre</label>
+                                    <h:inputText value="#{productosBean.prod.nombre}" binding="#{modnombre}" class="form-control" pt:name="mod-nombre" id="mod-nombre" pt:placeholder="Nombre"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="mod-precio">Precio</label>
+                                    <h:inputText value="#{productosBean.prod.precio}" binding="#{modprecio}" class="form-control" pt:name="mod-precio" id="mod-precio" pt:placeholder="Precio"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="mod-stock">Stock</label>
+                                    <h:inputText value="#{productosBean.prod.stock}" binding="#{modstock}" class="form-control" pt:name="mod-Stock" id="mod-Stock" pt:placeholder="Stock"  required="">
+                                        <f:convertNumber type="number"/> 
+                                    </h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label for="mod-img">Imagen</label>
+                                    <h:inputText value="#{productosBean.prod.img}" binding="#{modimg}" class="form-control" pt:name="mod-img" id="mod-img" pt:placeholder="Imagen"  required="" ></h:inputText>
+                                </div>                                
+                                
+                                <hr></hr>                                
+                                <h:commandButton type="submit" id="confirmar" value="Guardar Datos" action="#{productosBean.modificarProd(modnombre.value,modprecio.value,modstock.value,modimg.value)}" class="btn btn-primary"></h:commandButton>
+                            
+                            </h:form>
+                        </div><!-- panel-body -->
+                    </div><!-- panel -->
+                </div><!-- /col-md-6 pull-right -->
+            </div><!-- row -->
+
+
+        </div><!-- /.container -->        
+
+        <div class="footer navbar-inverse">
+            <div class="container">
+                <p class="text-muted"><strong>Tp Servlet - Damboriana, Ringa, Santillan</strong></p>
+            </div>
+        </div>
+        <script src="/TPJSF/js/jquery-1.11.1.min.js"></script>
+        <script src="/TPJSF/js/bootstrap.min.js"></script>    
+    </h:body>
+</html>
+

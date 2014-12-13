@@ -6,7 +6,8 @@
 
 package Modelo;
 
-public class Productos {
+
+public class Productos{
     private int id;
     private String nombre;
     private float precio;
@@ -66,5 +67,12 @@ public class Productos {
     {
         id = Id;
         nombre = Nombre;
+    }
+
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 }

@@ -2,7 +2,6 @@ package Datos;
 
 import Modelo.Compras;
 import Modelo.LineaDeCompra;
-import Modelo.Productos;
 import Modelo.Usuarios;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

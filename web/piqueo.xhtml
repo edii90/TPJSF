@@ -1,0 +1,93 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Piqueos - Ferreteria</title>
+        <link href="/TPJSF/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/style.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="main.xhtml">Ferreteria</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="main.xhtml"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li><a href="history.xhtml">Historial</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                        
+                        <li class="hidden-xs">
+                            <a id="cart" href="checkout.xhtml"><i class="glyphicon glyphicon-shopping-cart"></i>(#{comprasBean.cantItems()})</a>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{userlogBean.user.usuario} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li><a href="administration.xhtml"><span class="glyphicon glyphicon-cog"></span> Administrar Usuarios</a></li>
+                                <li><a href="productos.xhtml"> Productos</a></li> 
+                                <li><a href="compras.xhtml"> Compras</a></li>
+                                <li class="active"><a href="piqueo.xhtml"> Piqueos</a></li>
+
+                                <li><a href="Logout"><span class="glyphicon glyphicon-off"></span> Cerrar Sesion</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div><!-- /.nav-collapse -->
+            </div><!-- /.container -->
+        </nav>
+
+        <div class="container">
+            <c:if test="#{piqueosBean.hayMsj()}">
+                <div class="alert alert-info" role="alert" >
+                    <strong>#{piqueosBean.mostrarMsj()}</strong>
+                </div>
+            </c:if>
+            <c:if test="#{piqueosBean.todosPiqueos().size()!=0}">
+                <h:form>
+                    <c:forEach items="#{piqueosBean.todosPiqueos()}" var="piq">
+                        <div style="text-align: center; margin-bottom: 15px">
+                            <h:commandButton action="#{piqueosBean.confirmarPiqueo(piq.id)}" value="Confirmar Piqueo # #{piq.id}" id="confirmar" class="btn btn-confirmar btn-lg" /> 
+                        </div>
+                        <c:forEach items="#{piqueosBean.obtenerLineasPiqueo(piq.productos)}" var="lin">
+                            <div class="row item" style="display: inline-block; text-align: center; padding: 5px;min-width: 128px;">
+                                <h4>#{lin.nombre}</h4>  
+                                Cantidad:<div class="clearfix"></div>
+                                <strong><h:outputText value="#{lin.cantidad}"></h:outputText></strong>
+                            </div><!-- /.item -->
+                        </c:forEach>
+                    </c:forEach>
+                </h:form>
+            </c:if>
+            <c:if test="#{piqueosBean.todosPiqueos().size()==0}">
+                <div class='well well-lg'><strong>No Hay Piqueos Pendientes</strong></div>
+            </c:if>
+        </div><!-- /.container -->        
+
+        <div class="footer navbar-inverse">
+            <div class="container">
+                <p class="text-muted"><strong>Tp Servlet - Damboriana, Ringa, Santillan</strong></p>
+            </div>
+        </div>
+        <script src="/TPJSF/js/jquery-1.11.1.min.js"></script>
+        <script src="/TPJSF/js/bootstrap.min.js"></script>    
+    </h:body>
+</html>
+

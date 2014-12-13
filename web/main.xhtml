@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Principal - Ferreteria</title>
+        <link href="/TPJSF/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/style.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="main.xhtml">Ferreteria</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="main.xhtml"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li><a href="history.xhtml">Historial</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                        
+                        <li>
+                            <a id="cart" href="checkout.xhtml"><i class="glyphicon glyphicon-shopping-cart"></i>(#{comprasBean.cantItems()})</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{userlogBean.user.usuario} <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <c:if test="#{userlogBean.validarAdmin()}">
+                                    <li><a href="administration.xhtml"><span class="glyphicon glyphicon-cog"></span> Administrar Usuarios</a></li>
+                                    <li><a href="productos.xhtml"> Productos</a></li> 
+                                    <li><a href="compras.xhtml"> Compras</a></li>
+                                    <li><a href="piqueo.xhtml"> Piqueos</a></li>
+                                </c:if>
+                                <li><a><h:form><h:commandLink action="#{userlogBean.logout()}"  value="Cerrar Sesion" ></h:commandLink></h:form></a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div><!-- /.nav-collapse -->
+            </div><!-- /.container -->
+        </nav>
+
+        <div class="container">
+            <div class="row">                
+                <div class="col-xs-8 col-sm-9 col-md-10 main">
+                    <h1 class="page-header">Productos</h1>
+
+                    <div class="row placeholders" id="contenedor">
+
+                        <c:forEach items="#{productosBean.todosProd()}" var="producto">
+                            <h:form>
+                                <div class="col-xs-12 col-sm-6 placeholder mix" data-myorder="#{producto.id}" style="display: inline-block;">
+                                    <h:graphicImage class="img-responsive" alt="200x200" value="#{producto.img}"/>
+                                    <h4>#{producto.nombre}</h4><div class="clearfix"></div>
+                                    <div class="descripcion">Stock: #{producto.stock}</div><div class="clearfix"></div>
+                                    <span> $ #{producto.precio}</span><div class="clearfix"></div>
+                                    <h:inputText id="cant" pt:placeholder="Cantidad" class="form-control input-sm input-cant" value="#{compraBean.cantidad}" > 
+                                        <f:convertNumber type="number"/> 
+                                    </h:inputText><div class="clearfix"></div>
+                                    <h:commandButton type="submit" class="btn-sm btn-comprar" id="comprar" value="Comprar" action="#{compraBean.agregarProd()}" >
+                                        <f:setPropertyActionListener target="#{compraBean.img}" value="#{producto.img}" />
+                                        <f:setPropertyActionListener target="#{compraBean.nombre}" value="#{producto.nombre}" />
+                                        <f:setPropertyActionListener target="#{compraBean.costoUnit}" value="#{producto.precio}" />
+                                        <f:setPropertyActionListener target="#{compraBean.id}" value="#{producto.id}" />
+                                        <f:setPropertyActionListener target="#{compraBean.precio}" value="#{producto.precio}" />
+                                        <f:setPropertyActionListener target="#{compraBean.stock}" value="#{producto.stock}" />
+
+                                    </h:commandButton>
+
+                                </div>
+                            </h:form>
+                        </c:forEach>
+
+
+                    </div><!--row placeholders-->
+                </div><!--main-->
+            </div><!--row-->
+        </div><!-- /.container -->
+
+
+        <div class="footer navbar-inverse">
+            <div class="container">
+                <p class="text-muted"><strong>Tp Servlet - Damboriana, Ringa, Santillan</strong></p>
+            </div>
+        </div>
+        <script src="/TPJSF/js/jquery-1.11.1.min.js"></script>
+        <script src="/TPJSF/js/bootstrap.min.js"></script>    
+    </h:body>
+
+</html>
+

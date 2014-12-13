@@ -1,12 +1,60 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Facelet Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Iniciar Sesion - Ferreteria</title>
+        <link href="/TPJSF/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/style.css" rel="stylesheet"/>
     </h:head>
     <h:body>
-        Hello from Facelets
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a class="navbar-brand " href="#">Ferreteria </a>
+                </div>
+
+            </div><!-- /.container -->
+        </nav>
+        <div class="container">
+            <h:form class="form-signin">
+                <h2 class="form-signin-heading">Iniciar Sesion</h2>                
+                <h:inputText pt:placeholder="Usuario" id="usuario" class="form-control" value="#{userlogBean.user.usuario}" pt:autofocus="" required="" maxlength="10">
+                </h:inputText>
+                <h:inputSecret pt:placeholder="Contraseña" id="pass" class="form-control" value="#{userlogBean.user.contrasenia}" required="" onkeypress="return submitenter(this, event)" maxlength="20">  
+                </h:inputSecret>
+                <h:commandButton id="log" class="btn btn-lg btn-primary btn-block" type="submit" value="Login" action="#{userlogBean.login()}"></h:commandButton>
+            </h:form>
+            <c:if test="#{userlogBean.hayMsj()}">
+                <div id="mensaje" class="alert alert-error mensaje">
+                    <strong id="error">#{userlogBean.mostrarMsj()} </strong>
+                </div>
+            </c:if>         
+
+            <div id="crossfade">
+                <h:graphicImage value="/img/image1.jpg" alt="Image 1"></h:graphicImage>
+                <h:graphicImage value="/img/image2.jpg" alt="Image 2"></h:graphicImage>
+                <h:graphicImage value="/img/image3.jpg" alt="Image 3"></h:graphicImage>
+                <h:graphicImage value="/img/image4.jpg" alt="Image 4"></h:graphicImage>
+                <h:graphicImage value="/img/image5.jpg" alt="Image 5"></h:graphicImage>
+            </div>
+        </div>
+        <div class="footer navbar-inverse">
+            <div class="container">
+                <p class="text-muted"><strong>Tp Servlet - Damboriana, Ringa, Santillan</strong></p>
+            </div>
+        </div>
+        <script src="/TPJSF/js/jquery-1.11.1.min.js"></script>
+        <script src="/TPJSF/js/bootstrap.min.js"></script>
     </h:body>
+
 </html>
 

@@ -1,0 +1,217 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <title>Administracion - Ferreteria</title>
+        <link href="/TPJSF/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/bootstrap-theme.min.css" rel="stylesheet"/>
+        <link href="/TPJSF/css/style.css" rel="stylesheet"/>
+    </h:head>
+    <h:body>
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="main.xhtml">Ferreteria</a>
+                </div>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="main.xhtml"><span class="glyphicon glyphicon-home"></span> Inicio</a></li>
+                        <li><a href="history.xhtml">Historial</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">                        
+                        <li>
+                            <a id="cart" href="checkout.xhtml"><i class="glyphicon glyphicon-shopping-cart"></i>(#{comprasBean.cantItems()})</a>
+                        </li>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span> #{userlogBean.user.usuario}  <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+
+                                <li class="active"><a href="administration.xhtml"><span class="glyphicon glyphicon-cog"></span> Administrar Usuarios</a></li>
+                                <li><a href="productos.xhtml"> Productos</a></li> 
+                                <li><a href="compras.xhtml"> Compras</a></li>
+                                <li><a href="piqueo.xhtml"> Piqueos</a></li>
+
+                                <li><a href="Logout"><span class="glyphicon glyphicon-off"></span> Cerrar Sesion</a></li>
+                            </ul>
+                        </li>
+
+
+                    </ul>
+                </div><!-- /.nav-collapse -->
+            </div><!-- /.container -->
+        </nav>
+
+        <div class="container">
+            <h1 class="page-header">Administrar Usuarios</h1>
+
+            <c:if test="#{usuariosBean.hayMsj()}">
+                <div class="alert alert-info" role="alert" >
+                    <strong>#{usuariosBean.mostrarMsj()}</strong>
+                </div>
+            </c:if>
+            <div class="row">
+
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading">Lista de Usuarios</div>
+                    <div class="panel-body">
+                        <p>Lista de todos los Clientes registrados</p>
+                        <!-- Table -->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Apellido</th>
+                                    <th>DNI</th>
+                                    <th>Usuario</th> 
+                                    <th>Password</th>
+                                    <th>Tipo Usuario</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach items="#{usuariosBean.todosUser()}" var="usuario">
+
+                                    <tr id="user#{usuario.id}>">
+                                        <td>#{usuario.id}</td>
+                                        <td>#{usuario.nombre}</td>
+                                        <td>#{usuario.apellido}</td>   
+                                        <td>#{usuario.DNI}</td>
+                                        <td>#{usuario.usuario}</td>
+                                        <td>#{usuario.contrasenia}</td>
+                                        <td>#{usuario.nombreTipo()}</td>
+                                        <td><h:form>
+                                                <h:commandButton id="modificar" value="Modificar" class="btn btn-modificar">
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.id}" value="#{usuario.id}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.usuario}" value="#{usuario.usuario}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.contrasenia}" value="#{usuario.contrasenia}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.nombre}" value="#{usuario.nombre}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.apellido}" value="#{usuario.apellido}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.DNI}" value="#{usuario.DNI}"/>
+                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.tipoUsr}" value="#{usuario.tipoUsr}"/>
+                                                </h:commandButton>
+                                                <h:commandButton id="eliminar" type="submit" value="Eliminar" class="btn btn-eliminar" action="#{usuariosBean.eliminarUser()}">
+                                                    <f:setPropertyActionListener for="eliminar" target="#{usuariosBean.ID}" value="#{usuario.id}"/>
+                                                </h:commandButton>
+                                            </h:form></td>
+                                    </tr>
+                                </c:forEach>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 pull-left">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Registro de Usuarios</div>
+                        <div class="panel-body">
+                            <h:form class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="sr-only" for="nombre">Nombre</label>
+                                    <h:inputText value="#{usuariosBean.nombre}" class="form-control" pt:name="reg-nombre" id="reg-nombre" pt:placeholder="Nombre" required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="apellido">Apellido</label>
+                                    <h:inputText value="#{usuariosBean.apellido}" class="form-control" pt:name="reg-apellido" id="reg-apellido" pt:placeholder="Apellido"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="DNI">DNI</label>
+                                    <h:inputText value="#{usuariosBean.dni}" class="form-control" pt:name="reg-dni" id="reg-dni" pt:placeholder="DNI"  required="">
+                                        <f:convertNumber type="number"/> 
+                                    </h:inputText>
+
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="usuario">Usuario</label>
+                                    <h:inputText value="#{usuariosBean.usuario}" class="form-control" pt:name="reg-usuario" id="reg-usuario" pt:placeholder="Usuario" required="" maxlength="10"></h:inputText>
+                                </div>                                
+                                <div class="form-group">
+                                    <label class="sr-only" for="pass">Password</label>
+                                    <h:inputText value="#{usuariosBean.pass}"  class="form-control" pt:name="reg-pass" id="reg-pass" pt:placeholder="Password" required="" maxlength="20"></h:inputText>
+                                </div>
+                                <div class="selector">
+                                    <label class="sr-only" for="tipoUser">Administrador</label>
+                                    <h:selectOneMenu id="tipoUser" class="form-control" value="#{usuariosBean.tipouser}">
+                                        <f:selectItem id="item1" itemLabel="Admin" itemValue="1" />
+                                        <f:selectItem id="item2" itemLabel="Comun" itemValue="2" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <hr></hr>
+                                <h:commandButton type="submit" action="#{usuariosBean.registrarUser()}" id="reg" class="btn btn-primary pull-left" value="Registrar"></h:commandButton> 
+                                <button type="reset" class="btn btn-warning pull-right">Resetear</button>                                
+                            </h:form>
+                        </div><!-- panel-body -->
+                    </div><!-- panel -->
+                </div><!-- /col-md-3 pull-left -->
+                <div class="col-md-6 pull-left">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Modificar Usuario</div>
+                        <div class="panel-body">
+                            <h:form class="form-horizontal">
+                                 <div class="form-group">
+                                    <label  for="mod-nombre">Nombre</label>
+                                    <h:inputText value="#{usuariosBean.userMod.nombre}" class="form-control" pt:name="mod-nombre" id="mod-nombre" pt:placeholder="Nombre"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="mod-apellido">Apellido</label>
+                                    <h:inputText value="#{usuariosBean.userMod.apellido}" class="form-control" pt:name="mod-apellido" id="mod-apellido" pt:placeholder="Apellido"  required=""></h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <label  for="mod-dni">DNI</label>
+                                    <h:inputText value="#{usuariosBean.userMod.DNI}"  class="form-control" pt:name="mod-dni" id="mod-dni" pt:placeholder="DNI"  required="">
+                                        <f:convertNumber type="number"/> 
+                                    </h:inputText>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="mod-usuario">Usuario</label>
+                                    <h:inputText value="#{usuariosBean.userMod.usuario}" class="form-control" pt:name="mod-usuario" id="mod-usuario" pt:placeholder="Usuario"  required="" maxlength="10"></h:inputText>
+                                </div>                                
+                                <div class="form-group">
+                                    <label  for="mod-pass">Password</label>
+                                    <h:inputText value="#{usuariosBean.userMod.contrasenia}" class="form-control" pt:name="mod-pass" id="mod-pass" pt:placeholder="Password"  required="" maxlength="20"></h:inputText>
+                                </div>
+                                <div class="selector">
+                                    <label for="tipoUser">Tipo de Usuario</label>
+                                    <h:selectOneMenu id="tipoUser" class="form-control" value="#{usuariosBean.userMod.tipoUsr}">
+                                        <f:selectItem id="item1" itemLabel="Admin" itemValue="1" />
+                                        <f:selectItem id="item2" itemLabel="Comun" itemValue="2" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <hr></hr>                                
+                                <h:commandButton type="submit" id="confirmar" value="Guardar Datos" action="#{usuariosBean.modificarUser()}" class="btn btn-primary"></h:commandButton>
+                            
+                            </h:form>
+                        </div><!-- panel-body -->
+                    </div><!-- panel -->
+                </div><!-- /col-md-3 pull-left -->
+            </div>
+
+        </div><!-- /.container -->        
+
+        <div class="footer navbar-inverse">
+            <div class="container">
+                <p class="text-muted"><strong>Tp Servlet - Damboriana, Ringa, Santillan</strong></p>
+            </div>
+        </div>
+        <script src="/TPJSF/js/jquery-1.11.1.min.js"></script>
+        <script src="/TPJSF/js/bootstrap.min.js"></script>    
+    </h:body>
+</html>
+

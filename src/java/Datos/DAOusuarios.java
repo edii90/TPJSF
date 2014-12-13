@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
-
 public class DAOusuarios extends coneccionBD {
 
     public DAOusuarios() throws Exception {
@@ -42,13 +41,13 @@ public class DAOusuarios extends coneccionBD {
             PreparedStatement ps = Sentencia(sql);
             ResultSet rows = ConsultaConResultado(ps);
             if (rows.next()) {
-                usr = new Usuarios(rows.getInt("idUsr"), usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"),rows.getBoolean("estado"));
+                usr = new Usuarios(rows.getInt("idUsr"), usuario, pass, rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"), rows.getBoolean("estado"));
+                if (usr.isEstado() == false) {
+                    PreparedStatement activarUsr = Sentencia("UPDATE `usuarios` SET `estado`=1 WHERE `idUsr`='" + usr.getId() + "';");
+                    ConsultaSinResultado(activarUsr);
+                }
             }
-            if(usr.isEstado()==false)
-            {
-                PreparedStatement activarUsr = Sentencia("UPDATE `usuarios` SET `estado`=1 WHERE `idUsr`='"+usr.getId()+"';");
-                ConsultaSinResultado(activarUsr);
-            }
+
             return usr;
         } catch (SQLException ex) {
             throw new SQLException("Error en el login Usuario " + ex.getMessage());
@@ -67,7 +66,7 @@ public class DAOusuarios extends coneccionBD {
             if (rows.next()) {
                 usr = new Usuarios(rows.getString("usuario"), rows.getString("pass"), rows.getInt("DNI"), rows.getString("nombre"), rows.getString("apellido"), rows.getInt("tipo"));
                 usr.setId(id);
-                return  usr;
+                return usr;
             }
             return usr;
         } catch (SQLException ex) {

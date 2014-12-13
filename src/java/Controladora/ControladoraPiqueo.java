@@ -1,11 +1,11 @@
 package Controladora;
 
 import Datos.DAOpiqueo;
-import Modelo.Piqueos;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Hashtable;
 
-public class ControladoraPiqueo {
+public class ControladoraPiqueo implements Serializable {
     
     DAOpiqueo Dpiqueo;
     public ControladoraPiqueo() throws Exception

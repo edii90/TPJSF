@@ -1,15 +1,13 @@
 package Controladora;
 
 import Datos.DAOproductos;
-import Modelo.LineaDeCompra;
 import Modelo.Productos;
-import Modelo.Usuarios;
-import com.oracle.jrockit.jfr.Producer;
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
-public class ControladoraProductos {
+public class ControladoraProductos implements Serializable{
     
     DAOproductos Dproductos;
     Productos Eproductos;

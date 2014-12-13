@@ -39,6 +39,7 @@ public class Compras {
     public float calcularTotal(){
         Enumeration e = getLista().elements();
         LineaDeCompra aux;
+        total = 0;
         while(e.hasMoreElements())
         {
             aux=(LineaDeCompra) e.nextElement();
@@ -94,6 +95,6 @@ public class Compras {
     }
     public Compras()
     {
-        
+        lista = new Hashtable();
     }
 }
