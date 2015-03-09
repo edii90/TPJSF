@@ -69,16 +69,16 @@
                                     <h4>#{producto.nombre}</h4><div class="clearfix"></div>
                                     <div class="descripcion">Stock: #{producto.stock}</div><div class="clearfix"></div>
                                     <span> $ #{producto.precio}</span><div class="clearfix"></div>
-                                    <h:inputText id="cant" pt:placeholder="Cantidad" class="form-control input-sm input-cant" value="#{compraBean.cantidad}" > 
+                                    <h:inputText id="cant" pt:placeholder="Cantidad" class="form-control input-sm input-cant" value="#{comprasBean.cantidad}" > 
                                         <f:convertNumber type="number"/> 
                                     </h:inputText><div class="clearfix"></div>
-                                    <h:commandButton type="submit" class="btn-sm btn-comprar" id="comprar" value="Comprar" action="#{compraBean.agregarProd()}" >
-                                        <f:setPropertyActionListener target="#{compraBean.img}" value="#{producto.img}" />
-                                        <f:setPropertyActionListener target="#{compraBean.nombre}" value="#{producto.nombre}" />
-                                        <f:setPropertyActionListener target="#{compraBean.costoUnit}" value="#{producto.precio}" />
-                                        <f:setPropertyActionListener target="#{compraBean.id}" value="#{producto.id}" />
-                                        <f:setPropertyActionListener target="#{compraBean.precio}" value="#{producto.precio}" />
-                                        <f:setPropertyActionListener target="#{compraBean.stock}" value="#{producto.stock}" />
+                                    <h:commandButton type="submit" class="btn-sm btn-comprar" id="comprar" value="Comprar" action="#{comprasBean.agregarProd()}" >
+                                        <f:setPropertyActionListener target="#{comprasBean.img}" value="#{producto.img}" />
+                                        <f:setPropertyActionListener target="#{comprasBean.nombre}" value="#{producto.nombre}" />
+                                        <f:setPropertyActionListener target="#{comprasBean.costoUnit}" value="#{producto.precio}" />
+                                        <f:setPropertyActionListener target="#{comprasBean.id}" value="#{producto.id}" />
+                                        <f:setPropertyActionListener target="#{comprasBean.precio}" value="#{producto.precio}" />
+                                        <f:setPropertyActionListener target="#{comprasBean.stock}" value="#{producto.stock}" />
 
                                     </h:commandButton>
 

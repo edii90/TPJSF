@@ -95,18 +95,8 @@
                                         <td>#{usuario.contrasenia}</td>
                                         <td>#{usuario.nombreTipo()}</td>
                                         <td><h:form>
-                                                <h:commandButton id="modificar" value="Modificar" class="btn btn-modificar">
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.id}" value="#{usuario.id}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.usuario}" value="#{usuario.usuario}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.contrasenia}" value="#{usuario.contrasenia}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.nombre}" value="#{usuario.nombre}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.apellido}" value="#{usuario.apellido}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.DNI}" value="#{usuario.DNI}"/>
-                                                    <f:setPropertyActionListener for="modificar" target="#{usuariosBean.userMod.tipoUsr}" value="#{usuario.tipoUsr}"/>
-                                                </h:commandButton>
-                                                <h:commandButton id="eliminar" type="submit" value="Eliminar" class="btn btn-eliminar" action="#{usuariosBean.eliminarUser()}">
-                                                    <f:setPropertyActionListener for="eliminar" target="#{usuariosBean.ID}" value="#{usuario.id}"/>
-                                                </h:commandButton>
+                                                <h:commandButton id="modificar" action="#{usuariosBean.CargarDatos(usuario)}" value="Modificar" class="btn btn-modificar"></h:commandButton>
+                                                <h:commandButton id="eliminar" type="submit" value="Eliminar" class="btn btn-eliminar" action="#{usuariosBean.eliminarUser(usuario.id)}"></h:commandButton>
                                             </h:form></td>
                                     </tr>
                                 </c:forEach>
@@ -164,7 +154,7 @@
                         <div class="panel-heading">Modificar Usuario</div>
                         <div class="panel-body">
                             <h:form class="form-horizontal">
-                                 <div class="form-group">
+                                <div class="form-group">
                                     <label  for="mod-nombre">Nombre</label>
                                     <h:inputText value="#{usuariosBean.userMod.nombre}" class="form-control" pt:name="mod-nombre" id="mod-nombre" pt:placeholder="Nombre"  required=""></h:inputText>
                                 </div>
@@ -196,7 +186,7 @@
                                 </div>
                                 <hr></hr>                                
                                 <h:commandButton type="submit" id="confirmar" value="Guardar Datos" action="#{usuariosBean.modificarUser()}" class="btn btn-primary"></h:commandButton>
-                            
+
                             </h:form>
                         </div><!-- panel-body -->
                     </div><!-- panel -->

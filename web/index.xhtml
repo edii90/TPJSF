@@ -27,9 +27,9 @@
         <div class="container">
             <h:form class="form-signin">
                 <h2 class="form-signin-heading">Iniciar Sesion</h2>                
-                <h:inputText pt:placeholder="Usuario" id="usuario" class="form-control" value="#{userlogBean.user.usuario}" pt:autofocus="" required="" maxlength="10">
+                <h:inputText pt:placeholder="Usuario" id="usuario" class="form-control" value="#{userlogBean.usuario}" pt:autofocus="" required="" maxlength="10">
                 </h:inputText>
-                <h:inputSecret pt:placeholder="Contraseña" id="pass" class="form-control" value="#{userlogBean.user.contrasenia}" required="" onkeypress="return submitenter(this, event)" maxlength="20">  
+                <h:inputSecret pt:placeholder="Contraseña" id="pass" class="form-control" value="#{userlogBean.contra}" required="" onkeypress="return submitenter(this, event)" maxlength="20">  
                 </h:inputSecret>
                 <h:commandButton id="log" class="btn btn-lg btn-primary btn-block" type="submit" value="Login" action="#{userlogBean.login()}"></h:commandButton>
             </h:form>

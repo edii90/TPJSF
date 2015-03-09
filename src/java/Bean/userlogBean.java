@@ -19,6 +19,7 @@ public class userlogBean implements Serializable {
 
     private Usuarios user;
     private final ControladoraUsuarios cUser;
+    private String usuario, contra;
     String msj;
 
     public userlogBean() throws Exception {
@@ -40,7 +41,7 @@ public class userlogBean implements Serializable {
     public String login() throws Exception {
         String rta = "index";
         try {
-            user = getcUser().Login(user.getUsuario(), user.getContrasenia());
+            user = getcUser().Login(getUsuario(), getContra());
             if (user != null) {
                 HttpSession session = (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
                 session.setAttribute("logueado", user);
@@ -48,7 +49,7 @@ public class userlogBean implements Serializable {
             }
         } catch (Exception ex) {
             msj = "Usuario y/o Contraseña incorrecto";
-
+            user = new Usuarios();
             rta = "index";
 
         } finally {
@@ -98,6 +99,34 @@ public class userlogBean implements Serializable {
      */
     private ControladoraUsuarios getcUser() {
         return cUser;
+    }
+
+    /**
+     * @return the usuario
+     */
+    public String getUsuario() {
+        return usuario;
+    }
+
+    /**
+     * @param usuario the usuario to set
+     */
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    /**
+     * @return the contra
+     */
+    public String getContra() {
+        return contra;
+    }
+
+    /**
+     * @param contra the contra to set
+     */
+    public void setContra(String contra) {
+        this.contra = contra;
     }
 
 }

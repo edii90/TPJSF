@@ -30,15 +30,6 @@
     </managed-bean>
     
     <navigation-rule>
-        <from-view-id>faces/*</from-view-id>
-        <navigation-case>
-            <from-action>#{userlogBean.logueado()}</from-action>
-            <from-outcome>nolog</from-outcome>
-            <to-view-id>/index.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
         <from-view-id>/index.xhtml</from-view-id>
         <navigation-case>
             <from-outcome>main</from-outcome>
@@ -94,6 +85,10 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>msj</from-outcome>
+            <to-view-id>/administration.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>carga</from-outcome>
             <to-view-id>/administration.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>

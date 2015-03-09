@@ -56,8 +56,8 @@ public class usuariosBean implements Serializable{
         return !msj.isEmpty();
     }
 
-    public String eliminarUser() throws Exception {
-        if (cUser.BajaUsuario(ID)) {
+    public String eliminarUser(int id) throws Exception {
+        if (cUser.BajaUsuario(id)) {
             msj = "Usuario eliminado correctamente";
         } else {
             msj = "Error al eliminar Usuario";
@@ -82,6 +82,10 @@ public class usuariosBean implements Serializable{
             msj = "Error al modificar Usuario";
         }
         return "msj";
+    }
+    public String CargarDatos(Usuarios aux){
+        this.userMod = aux;
+        return "carga";
     }
 
 
